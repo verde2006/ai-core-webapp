@@ -23,25 +23,23 @@ export default class Home extends Component {
                 icon: profile
             },
             {
-                to: "/app/timeline",
+                onClick: ()=>{window.open("https://github.com/life-efficient/Academy-of-AI")},
                 title: "Code",
                 icon: code
             },
             {
-                to: "/app/give_code",
-                title: "Feedback",
+                onClick: ()=>{window.open("https://docs.google.com/forms/d/e/1FAIpQLSc5rHDwlboLfNMjgQDz6MhcNLJEiPu31zWOWK5gd9P54gfJuw/viewform?usp=sf_link")},
+                title: "Feedback & suggestions",
                 icon: feedback
             },
-            {
-                to: "/app/challenge",
-                title: "This week's challenge",
-                icon: code
-            },
+            // {
+            //     to: "/app/challenge",
+            //     title: "This week's challenge",
+            //     icon: code
+            // },
         ]
         return (
             <>
-                <Navbar />
-                <div className="panel-title">Home</div>
                 <TileGrid tiles={sections} />
             </>
         )

@@ -8,13 +8,14 @@ import { combineReducers, createStore } from "redux"
 import { ProtectedRoute } from "./CustomRoutes"
 import { Provider } from "react-redux"
 import { Helmet } from 'react-helmet'
-import { Modal } from "mvp-webapp"
+import { Modal, SideMenu } from "mvp-webapp"
 import Login from "./components/landing/Login"
 import logo from "./images/logo.png"
 import Home from "./components/app/Home"
 import Profile from "./components/app/Profile"
 import AppRoutes from "./components/app/AppRoutes";
 import SignUp from "./components/landing/SignUp"
+import favicon from "./images/favicon.ico"
 
 //Amplify.Logger.LOG_LEVEL = 'DEBUG';
 Amplify.configure({
@@ -85,9 +86,9 @@ const modal = (state={open: false, content: null}, action) => {
     }
 }
 
-const sideNav = (state = {open: false}, action) => {
+const menu = (state = {open: false}, action) => {
     switch (action.type) {
-        case "TOGGLE_SIDENAV" :
+        case "TOGGLE_MENU" :
             console.log('toggling sidenav')
             return {
                 ...state,
@@ -122,12 +123,19 @@ const app = (state={}, action) => {
     }
 }
 
+const user = () => {
+    return {
+        display_pic: null
+    }
+}
+
 const reducer = combineReducers({
     modal,
     slideUp,
-    sideNav,
+    menu,
     notify,
-    app
+    app,
+    user
 })
 
 export const store = createStore(reducer)
@@ -148,6 +156,9 @@ class App extends Component {
                     <div className="App">
                         <Helmet>
                             <title>{store.getState().app.name}</title>
+                              <meta name="ABC" content="ABC" />
+                            <link rel="icon" href={favicon} sizes="16x16" />
+
                         </Helmet>
                         <Switch>
                             <ProtectedRoute path="/app" component={AppRoutes}/>
@@ -163,6 +174,7 @@ class App extends Component {
                             <Route component={NotFound} path=""/> 
                         </Switch>
                         <Modal />
+                        <SideMenu />
                     </div>
                 </Router>
             </Provider>
