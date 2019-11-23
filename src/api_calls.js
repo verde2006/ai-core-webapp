@@ -12,7 +12,7 @@ export const makeGetRequest = (endpoint, callback, handleErr=(err)=>{console.log
                     'Content-Type': 'application/json'
                 }
             }
-            var url = `https://46zwadhds2.execute-api.eu-west-2.amazonaws.com/prod/${endpoint}`
+            var url = window.api_root + endpoint
             console.log('Making request to:', url)
             fetch(url, options)
             .then(
@@ -42,6 +42,7 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
     Auth.currentSession()
     .then(
         data => {
+            console.log('currentSession:', data)
             var IDToken = data.getIdToken().getJwtToken()
             // console.log(IDToken)
             // console.log(JSON.stringify(body))
@@ -54,7 +55,7 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
                     'Content-Type': 'application/json'
                 }
             }
-            var url = `https://46zwadhds2.execute-api.eu-west-2.amazonaws.com/prod/${endpoint}`
+            var url = window.api_root + endpoint
             console.log('Making request to:', url)
             fetch(url , options) 
             .then(
@@ -67,7 +68,7 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
                 }
             )
             .then(
-                data => callback(data)
+                data => callback ? callback(data) : null
             )
             .catch(
                 err =>  handleErr(err)

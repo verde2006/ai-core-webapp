@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import { connect } from "react-redux"
 import { css } from "@emotion/core"
 import default_dp from "../../images/profile.png"
+/** @jsx jsx */ import { jsx } from '@emotion/core'
 
 const style = css`
     .display-pic {
@@ -18,7 +19,8 @@ const style = css`
         opacity: 0.5;
     }
 
-    background-color: var(--color1);
+    background-color: var(--color2);
+    border: 10px solid var(--color2);
     border-radius: 50vw;
     height: 50vw;
     width: 50vw;
@@ -31,15 +33,9 @@ const style = css`
 class PP extends Component {
 
     render() {
-    console.log(style)
-        // console.log('USER:', this.props.user)
-        console.log('profile styles:', this.props.user)
         return (
             <>
             <div >
-                <div className="large">
-                    My profile pic
-                </div>
                 <div css={style}>
                     <label for="dp-input" className="dp-input">
                         <input onChange={this.uploadDP} id="dp-input" type="file" style={{display: 'none'}} />

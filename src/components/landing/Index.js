@@ -5,6 +5,9 @@ import { Navbar, Button, LandingPage } from "mvp-webapp"
 import hero from "../../images/hero.jpg"
 import { makePostRequest } from "../../api_calls"
 import SignUpModal from "./SignUpModal"
+import { css } from "@emotion/core"
+/** @jsx jsx */ import { jsx } from '@emotion/core'
+import MainWorkshops from "./MainWorkshops"
 
 class _ContactButton extends Component {
 
@@ -111,48 +114,65 @@ class Home extends Component{
             <>
             {/* <Navbar btn='Login'/> */}
             <LandingPage 
-                hero={hero}
-                heading="London's largest network of student AI talent"
-                subtitle='Over 5000 students with data science, coding and AI skills from top London universities'
-                btnText='Get involved'
                 navLink='/login'
-                action={() => {this.props.openModal(<SignUpModal/> )}}
-                // action={() => {this.props.openModal(<Button/> )}}
-                // sections={[
-                //     <VideoDemo name={this.props.name} />
-                //     ,
-                //     <>
-                //         <div className="large index-section-title">
-                //             Why use {this.props.name}?
-                //         </div>
-                //         <div className="medium">
-                //             Here are some great reasons!
-                //         </div>
-                //         <ol>
-                //             {[
-                //                 'Reason 1',
-                //                 'Reason 2',
-                //                 'Reason 3'
-                //             ]
-                //             .map((i) => {return (
-                //                 <>
-                //                 <li className="medium" style={{textAlign: 'left', minWidth: '50%', boxSizing: 'border-box', padding: '30px !important'}} >
-                //                     {i}
-                //                 </li>
-                //                 <br/>
-                //                 </>
-                //             )})}
-                //         </ol>
-                //     </>
-                //     ,
-                //     <TabbedIndexSection />
-                //     ,
-                //     <div className="large" style={{textAlign: 'left'}} >
-                //          Here's how much it costs
-                //          <br/>
-                //         <ContactButton />
-                //     </div>
-                // ]}
+                nav={{
+                    links: ['workshops', 'meetups', 'about'],
+                    actionText: 'Login',
+                    to: '/login'
+                }}
+                // hero={hero}
+                fold={{
+                    hero,
+                    heading: "London's largest network of student AI talent",
+                    subtitle: 
+                        <div css={css`> div {margin-bottom: 10px;}`}>
+                            <div>
+                                Over 5000 students with data science, coding and AI skills from top London universities.
+                            </div>
+                        </div>,
+                    actionText: 'Get involved',
+                    action: () => {this.props.openModal(<SignUpModal/> )},
+                }}
+                sections={[
+                    <MainWorkshops />,
+                    <div className="large" css={css`textAlign: left; color: black;`} >
+                        <div css={css`font-size: var(--large)`}>
+                            Meetups
+                        </div>
+                        <div css={css`justify-content: center; display: flex; flex-direction: column; align-items: center;`}>
+                            Every Sunday we all come together in an open space to hack on projects and find solutions to them.
+                            <br/>
+                            <br/>
+                            Come along if you want to:
+                            {
+                                [
+                                    'meet new people and hang out',
+                                    'get help with code',
+                                    'help others with code',
+                                    'share ideas and projects'
+                                ].map((i)=>{return(
+                                    <div css={css`margin: 10px; padding: 10px; border: 3px solid rgba(1, 1, 1, 0.5); width: 300px; box-shaow: var(--shadow); border-radius: 5px; font-weight: 1000`}>
+                                        {i}
+                                    </div>
+                                )})
+                            }
+                            <div>
+                                
+                            </div>
+                            Location: Skempton building room 164, Imperial College London
+                            <br/>
+                            Time: 1200-1400
+                            <br/>
+                            {/* <div css={css`font-size: var(--medium); font-weight: 1000; margin-top: 30px`}>
+                                Want dedicated project help?         
+                                <br/>
+                                <Button text='Book office hours' onClick={()=>{window.open('')}}/>
+                            </div> */}
+                        </div>
+                        <div css={css`font-size: 35px; margin: 20px`}> 
+                        </div>
+                     </div>
+                ]}
             />
             </>
         )

@@ -56,14 +56,15 @@ class SignUp extends Component {
                             // password = makeid()
                             // password = 'hello there' 
                             try {
-                                makePostRequest('signup')
+                                makePostRequest('app/join/add-member', e)
                                 // await Auth.signUp({
-                                //     username: e.email,
+                                //     username: e.email,`
                                 //     password: password
                                 // })
                             }
                             catch (err) {       // if username already exists but email not confirmed
                                 console.log(err)
+                                return err
                                 if (err.message === 'User is already confirmed.') {
                                     console.log('redirecting to login')
                                     this.setState({redirect: '/login'})
@@ -78,6 +79,15 @@ class SignUp extends Component {
                                     // });
                                 }
                             }
+                        }
+                    },
+                    {
+                        title: 'Create a password',
+                        subtitle: 'Creating an account allows you to use our tools, and keep up to date',
+                        questions: [{title: 'Password', type: 'password', id: 'password'}],
+                        onSubmit: async (e) => {
+                            await Auth.signUp(e.email, e.password);
+                            await Auth.signIn(e.email, e.password);
                         }
                     },
                     {

@@ -16,6 +16,8 @@ import Profile from "./components/app/Profile"
 import AppRoutes from "./components/app/AppRoutes";
 import SignUp from "./components/landing/SignUp"
 import favicon from "./images/favicon.ico"
+import Workshops from "./components/landing/Workshops"
+import { makeGetRequest } from "./api_calls";
 
 //Amplify.Logger.LOG_LEVEL = 'DEBUG';
 Amplify.configure({
@@ -47,6 +49,8 @@ Amplify.configure({
         }
     }
 });
+
+window.api_root = 'https://yjr86j4o4f.execute-api.eu-west-2.amazonaws.com/prod/'
 
 const slideUp = (state={open: false, content: null}, action) => {
     switch (action.type) {
@@ -119,13 +123,39 @@ const notify = (state={show: false}, action) => {
 const app = (state={}, action) => {
     return {
         name: 'AI CORE',
-        logo
+        logo,
+        address: '120 Edith Road, London',
+        contact: '07765892392'
     }
 }
 
-const user = () => {
-    return {
-        display_pic: null
+const user = (state={}, action) => {
+    console.log('action:', action)
+    switch (action.type) {
+        case "SET_USER":
+            var s = {
+                ...state,
+                ...action.update
+            }
+            console.log('new user:', s)
+            return s
+        case "RATE_COMPANY":
+            console.log('rating redux')
+            var company_ratings = {
+                [action.company]: action.rating,
+                ...state.company_ratings
+            }
+            console.log('new ratings:', company_ratings)
+            var c = {...state, company_ratings}
+            console.log('new state:', c)
+            return c
+        default:
+            return {
+                display_pic: null,
+                skills: [],
+                interests: [],
+                company_ratings: {}
+            }
     }
 }
 
@@ -139,6 +169,9 @@ const reducer = combineReducers({
 })
 
 export const store = createStore(reducer)
+
+// GET INITIAL DATA
+makeGetRequest('app/user/info', (update)=>{store.dispatch({type: "SET_USER", update})})
 
 class App extends Component {
 
@@ -170,6 +203,7 @@ class App extends Component {
                                 )} */}
                             <Route path="/login" component={Login} />
                             <Route path="/signup" component={SignUp} />
+                            <Route path="/workshops" component={Workshops} />
                             <Route path="/" component={LandingIndex} />
                             <Route component={NotFound} path=""/> 
                         </Switch>

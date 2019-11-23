@@ -2,6 +2,36 @@ import React, { Component } from "react"
 import edit from "../../images/edit.svg"
 import save from "../../images/save.png"
 import { makePostRequest } from "../../api_calls";
+/** @jsx jsx */ import { jsx } from '@emotion/core'
+import { css } from "@emotion/core"
+import { panel } from "mvp-webapp"
+
+const style = css`
+    background: linear-gradient(var(--color2), var(--color2g));
+    ${panel}
+
+    > img {
+        position: absolute;
+        height: 25px;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: 1000;
+        float: left;
+    }
+
+    textarea {
+        background-color: transparent;
+        width: 90%;
+        height: 100px;
+        border: 2px solid black;
+        border-radius: var(--radius);
+    }    
+`
 
 class Bio extends Component {
     constructor(props) {
@@ -26,15 +56,15 @@ class Bio extends Component {
 
     onBioSave = () => {
         this.setState({editing: false})
-        makePostRequest('stylist-my-info', {bio: this.state.bio},
+        makePostRequest('my-info', {bio: this.state.bio},
             () => {console.log('bio saved')}
         )
     }
 
     render() {
         return (
-            <div className="panel bio">
-                <div className="medium">
+            <div css={style}>
+                <div className="title">
                     Bio
                 </div>
                 {
@@ -52,7 +82,7 @@ class Bio extends Component {
                             this.state.bio != '' ?
                             this.state.bio
                             :
-                            'Edit a bio'
+                            'I love ML so much'
                         }
                     </div>
                     </>

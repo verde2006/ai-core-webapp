@@ -4,13 +4,15 @@ import Home from "./Home"
 import Profile from "./Profile"
 import { Navbar } from "mvp-webapp"
 import { connect } from "react-redux"
+import Companies from "./Companies"
 
 const AppRoutes = (props) => {
     return (
         <>
-            <Navbar btn='Menu' action={props.openMenu}/>
+            <Navbar btn='Menu' action={props.openMenu} home='/app'/>
             <Route path='/app' exact component={Home}/>
             <Route path="/app/profile" component={Profile} />
+            <Route path="/app/companies" component={Companies} />
         </>
     )
 }

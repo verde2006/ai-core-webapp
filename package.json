@@ -7,7 +7,7 @@
     "@emotion/styled": "^10.0.17",
     "aws-amplify": "^1.2.4",
     "chart.js": "^2.8.0",
-    "mvp-webapp": "^2.5.11",
+    "mvp-webapp": "^2.6.6",
     "node-sass": "^4.12.0",
     "query-string": "^6.8.3",
     "react": "^16.9.0",
