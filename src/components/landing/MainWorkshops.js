@@ -3,21 +3,63 @@ import { css } from "@emotion/core"
 import { Button } from "mvp-webapp"
 /** @jsx jsx */ import { jsx } from '@emotion/core'
 
+const style = css`
+    .title {
+        font-size: var(--large)
+    }
+
+    .section{
+        .title {
+            font-size: var(--medium)
+        }
+        margin-top: 30px
+    }
+`
+
 export default (props) => {
     console.log('y')
+    window.scrollTo({top: 0, left: 0, behavior: 'auto'})
     return (
-    <div className="large" css={css`textAlign: left`} >
-            <div css={css`font-size: var(--large)`}>
-                Workshops
+        <>
+        <div css={style}>
+            <div className="title">
+                Events
             </div>
-            <div>
-                Every Saturday, we host free workshops to train people in both the <strong>theory and code</strong> of topics in artificial intelligence.
+            <div className="section">
+                <div className="title">
+                    Workshops
+                </div>
+                <div>
+                    We host free workshops to train people in both the <strong>theory and code</strong> of topics in artificial intelligence.
+                    <br/>
+                    <br/>
+                    Our Deep Learning course is now in session!
+                </div>
             </div>
-            <div css={css`font-size: 35px; margin: 20px`}> 
-                This week: our Deep Learning course begins!
+            <div className="section">
+                <div className="title">
+                    Open hacking meet ups 
+                </div>
+                <div>
+                    Every Wednesday and Sunday, we host relaxed sessions where anyone can come along and meet people, share project ideas, get help with code, or just hang out.
+                    <br/>
+                    <br/>
+                    Follow our Twitter <span css={css`text-decoration: underline; cursor: pointer;`} onClick={()=>{window.open('https://twitter.com/TheAICore')}}>@TheAICore</span> for details about our upcoming open hacking sessions.
+                </div>
             </div>
-            {/* <Button text='Sign up here' onClick={()=>{window.open('https://www.eventbrite.co.uk/e/neural-networks-1-at-imperial-college-london-tickets-81476587667')}}/> */}
-            {/* <br/> */}
-            <Button text='See all upcoming workshops' onClick={()=>{window.open('https://www.eventbrite.co.uk/o/the-ai-core-18715367897')}}/>
-    </div>
+            <div className="section">
+                <div className="title">
+                    Topical Events 
+                </div>
+                <div>
+                    Along with all the technical stuff we do, we run topical events to keep our community up to date with the latest work and issues in AI.
+                    <br/>
+                    <br/>
+                    We've previously held events on ethics and gender diversity.
+                </div>
+            </div>
+        </div>
+        <br/>
+        <Button text='Check out our upcoming events and coverage of previous ones!' to='/events'/>
+        </>
 )}

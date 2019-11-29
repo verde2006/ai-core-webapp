@@ -6,16 +6,22 @@ import default_dp from "../../images/profile.png"
 import { makePostRequest } from "../../api_calls"
 import { Storage } from "aws-amplify"
 import Bio from "./Bio"
-import { css } from "@emotion/core"
+import { css, jsx } from "@emotion/core"
+/** @jsx jsx */
 import ProfilePic from "./ProfilePic"
 import Options from "./Options"
+import About from "./About"
+import Skills from "./Skills"
 
 class Profile extends Component{
     render() {
     return (
-        <>
-        <ProfilePic />
-        <Bio bio={this.props.user.bio}/>
+        <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'colum', justifyContent: 'left', flexFlow: 'column wra'}}>
+        <div css={css`margin: 20px`}>
+            <ProfilePic />
+            <Bio bio={this.props.user.bio}/>
+        </div>
+        <About />
         <Options 
             options={this.props.user.interests}
             allOptions={['Computer vision', 'NLP', 'RL', 'Startups', 'Consulting', 'Hardware', 'Design', 'Sales', 'Writing']}
@@ -25,7 +31,8 @@ class Profile extends Component{
                 this.props.setUserInfo({interests});
             }}
         />
-        <Options 
+        <Skills />
+        {/* <Options 
             options={this.props.user.skills}
             allOptions={['computer vision', 'NLP', 'RL']}
             title='Your skills'
@@ -33,11 +40,11 @@ class Profile extends Component{
                 console.log('updating with:', skills)
                 this.props.setUserInfo({skills});
             }}
-        />
+        /> */}
         {/* <Interests /> */}
         {/* <Stats user={this.props.user}/>
         <FeatureRequest /> */}
-        </>
+        </div>
         )
     }   
 }

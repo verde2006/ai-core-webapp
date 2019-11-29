@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import { css } from "@emotion/core"
 import default_dp from "../../images/profile.png"
 /** @jsx jsx */ import { jsx } from '@emotion/core'
+import uuid from "uuid"
+import { Storage } from "aws-amplify"
 
 const style = css`
     .display-pic {
@@ -32,6 +34,43 @@ const style = css`
 
 class PP extends Component {
 
+    uploadDP = (e) => {
+        console.log('updating DP')
+        console.log(e.target.id)
+                console.log('uploading')
+        return new Promise(
+            (resolve, reject) => {
+                var type
+                var url
+                var fp
+                var file = e.target.files[0]
+                type = file.type.split('/')[1]
+                fp = `users/${uuid.v4()}.${type}`
+                var mimeType 
+                if (type == 'png') {
+                    mimeType = 'image/png'
+                }
+                else if (type == 'jpg' || type == 'jpeg') {
+                    mimeType = 'image/jpeg'
+                }
+                else {
+                    alert('image type invalid (use .PNG, .JPG or .JPEG images)\nYou used type ' + type)
+                    return null
+                }
+                console.log('puttin')
+                Storage.put(fp, file, {contentType: mimeType})
+                .then(
+                    () => {
+                        url =`https://s3-eu-west-1.amazonaws.com/theaicore-data/public/${fp}`
+                        this.props.set_dp({display_pic: url})
+                    }
+                )
+                .catch((err) => {alert('ERROR:', err)})
+                //.catch(reject(Error('The following file failed to upload:', files[i])))
+                }
+        )
+    }
+
     render() {
         return (
             <>
@@ -42,18 +81,6 @@ class PP extends Component {
                         <img src={this.props.dp_url ? this.props.dp_url : default_dp} className="display-pic" alt=""/>
                     </label>
                 </div>
-                {/* <Bio bio={this.props.user.bio}/> */}
-                {/* <Stats user={this.props.user}/> */}
-                {/* <Style styles={this.props.user}
-                //  endpoint='stylist-my-info'
-                onChange={(styles) => {
-                    this.props.setStylistInfo({styles});
-                    makePostRequest('stylist-my-info', {styles}, 
-                        () => {console.log('dets updated')}
-                    )
-                }}
-                 /> */}
-                {/* <FeatureRequest /> */}
             </div>
             </>
         )
@@ -70,17 +97,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // setStylistInfo: (update) => {
-        //     makePostRequest('stylist-my-info', update,
-        //         () => {
-        //             console.log('user updated')
-        //         }
-        //     )
-        //     dispatch({
-        //         type: "SET_USER",
-        //         update: update
-        //     })
-        // }
+        set_dp: (update) => {
+            dispatch({
+                type: "SET_USER",
+                update
+            })
+        }
     }
 }
 

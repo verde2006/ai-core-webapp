@@ -24,7 +24,7 @@ export default class Home extends Component {
                 icon: profile
             },
             {
-                onClick: ()=>{window.open("https://github.com/life-efficient/Academy-of-AI")},
+                onClick: ()=>{window.open("https://github.com/AI-Core")},
                 title: "Code",
                 icon: code
             },
@@ -34,10 +34,11 @@ export default class Home extends Component {
                 icon: company
             },
             {
-                onClick: ()=>{window.open("https://docs.google.com/forms/d/e/1FAIpQLSc5rHDwlboLfNMjgQDz6MhcNLJEiPu31zWOWK5gd9P54gfJuw/viewform?usp=sf_link")},
-                title: "Feedback & suggestions",
+                onClick: ()=>{window.open("https://docs.google.com/forms/d/e/1FAIpQLSdZSxvkAE19vjDN4jpp0VvUBPGr_wdtayGAcRNfFGH7e7jQDQ/viewform?usp=sf_link")},
+                title: "Workshop feedback",
                 icon: feedback
             },
+        {/* <HelpUsGrow/> opens modal which prompts them to share my latest linkedin post with link to it */}
             // {
             //     to: "/app/challenge",
             //     title: "This week's challenge",

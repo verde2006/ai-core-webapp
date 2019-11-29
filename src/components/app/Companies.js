@@ -6,7 +6,23 @@ import { makePostRequest } from "../../api_calls"
 
 const co = [
     'apple',
-    'google'
+    'google',
+    'facebook',
+    'bain & co',
+    'deloitte',
+    'deliveroo',
+    'netflix',
+    'nvidia',
+    'arm',
+    'deepmind',
+    'openai',
+    'datatonic',
+    'mckinsey',
+    'quantumblack',
+    'ocado',
+    'y combinator',
+    'microsoft',
+
 ]
  
 class Companies extends Component {
@@ -25,7 +41,7 @@ class Companies extends Component {
     render() {
         console.log('cos:', this.props.company_ratings)
         return (
-            <div>
+            <div css={css`margin-bottom: 20px`}>
                 <div css={css`font-family: var(--font1); font-size: 22px; font-weight: 100; padding: 10px;`}>
                     Let us know what companies you're most interested in
                 </div>
@@ -89,6 +105,8 @@ const style = css`
     .title {
         font-size: 30px;
         font-weight: 1000;
+        float: left;
+        text-align: left;
     }
 
     .rating {

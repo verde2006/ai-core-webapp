@@ -19,6 +19,14 @@ import favicon from "./images/favicon.ico"
 import Workshops from "./components/landing/Workshops"
 import { makeGetRequest } from "./api_calls";
 
+import createHistory from "history/createBrowserHistory"
+import Partnerships from "./components/landing/Partnerships";
+import About from "./components/landing/About";
+export const history = createHistory()
+history.listen((location, action) => {
+    window.scrollTo(0, 0)
+})
+
 //Amplify.Logger.LOG_LEVEL = 'DEBUG';
 Amplify.configure({
     Auth: {
@@ -44,8 +52,8 @@ Amplify.configure({
     },
     Storage: {
         AWSS3: {
-            bucket: 'core-data', //REQUIRED -  Amazon S3 bucket
-            region: 'eu-west-1', //OPTIONAL -  Amazon service region
+            bucket: 'theaicore-data', //REQUIRED -  Amazon S3 bucket
+            region: 'eu-west-2', //OPTIONAL -  Amazon service region
         }
     }
 });
@@ -133,6 +141,7 @@ const user = (state={}, action) => {
     console.log('action:', action)
     switch (action.type) {
         case "SET_USER":
+            console.log('update:', action.update)
             var s = {
                 ...state,
                 ...action.update
@@ -149,12 +158,14 @@ const user = (state={}, action) => {
             var c = {...state, company_ratings}
             console.log('new state:', c)
             return c
+            
         default:
             return {
                 display_pic: null,
                 skills: [],
                 interests: [],
-                company_ratings: {}
+                company_ratings: {},
+                about: {}
             }
     }
 }
@@ -191,19 +202,16 @@ class App extends Component {
                             <title>{store.getState().app.name}</title>
                               <meta name="ABC" content="ABC" />
                             <link rel="icon" href={favicon} sizes="16x16" />
+                            <script src="https://kit.fontawesome.com/2de6851308.js" crossorigin="anonymous"></script>
 
                         </Helmet>
                         <Switch>
                             <ProtectedRoute path="/app" component={AppRoutes}/>
-                                {/* component={AppContent} 
-                                render={()=>(
-                                    <>
-                                        <Route path="/app" component={Home} />
-                                    </>
-                                )} */}
                             <Route path="/login" component={Login} />
                             <Route path="/signup" component={SignUp} />
-                            <Route path="/workshops" component={Workshops} />
+                            <Route path="/events" component={Workshops} />
+                            <Route path="/partnerships" component={Partnerships} />
+                            <Route path="/about" component={About} />
                             <Route path="/" component={LandingIndex} />
                             <Route component={NotFound} path=""/> 
                         </Switch>

@@ -9,6 +9,7 @@ import { panel } from "mvp-webapp"
 const style = css`
     background: linear-gradient(var(--color2), var(--color2g));
     ${panel}
+    max-height: 300px;
 
     > img {
         position: absolute;
@@ -56,7 +57,7 @@ class Bio extends Component {
 
     onBioSave = () => {
         this.setState({editing: false})
-        makePostRequest('my-info', {bio: this.state.bio},
+        makePostRequest('app/user/update-info', {bio: this.state.bio},
             () => {console.log('bio saved')}
         )
     }

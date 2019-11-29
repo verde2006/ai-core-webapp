@@ -63,7 +63,7 @@ class SignUp extends Component {
                                 // })
                             }
                             catch (err) {       // if username already exists but email not confirmed
-                                console.log(err)
+                                console.log('caught error:', err)
                                 return err
                                 if (err.message === 'User is already confirmed.') {
                                     console.log('redirecting to login')
@@ -87,15 +87,14 @@ class SignUp extends Component {
                         questions: [{title: 'Password', type: 'password', id: 'password'}],
                         onSubmit: async (e) => {
                             await Auth.signUp(e.email, e.password);
-                            await Auth.signIn(e.email, e.password);
                         }
                     },
                     {
-                        title: 'Create a password',
-                        subtitle: 'Creating an account allows you to use our tools, and keep up to date',
-                        questions: [{title: 'Password', type: 'password', id: 'password'}],
+                        title: 'Confirm your email',
+                        subtitle: 'Enter the code that you were emailed',
+                        questions: [{title: 'Code', type: 'text', id: 'code'}],
                         onSubmit: async (e) => {
-                            await Auth.signUp(e.email, e.password);
+                            await Auth.confirmSignUp(e.email, e.code)
                             await Auth.signIn(e.email, e.password);
                         }
                     }
