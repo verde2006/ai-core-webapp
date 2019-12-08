@@ -32,7 +32,6 @@ class Home extends Component {
             },
             {
                 to: "/app/training",
-                // onClick: ()=>{window.open("https://github.com/AI-Core")},
                 title: "Code",
                 icon: code
             },
@@ -42,8 +41,8 @@ class Home extends Component {
                 icon: company
             },
             {
-                onClick: ()=>{window.open("https://docs.google.com/forms/d/e/1FAIpQLSdZSxvkAE19vjDN4jpp0VvUBPGr_wdtayGAcRNfFGH7e7jQDQ/viewform?usp=sf_link")},
-                title: "Feedback and suggestions",
+                onClick: ()=>{window.open("https://docs.google.com/forms/d/e/1FAIpQLSfmWo-SvTaCwcaBpFCzioL9mzaBN79Z0E3d51DNhH_3vj-dEA/viewform?usp=sf_link")},
+                title: "Feedback, suggestions and testimonials",
                 icon: feedback
             },
             // {

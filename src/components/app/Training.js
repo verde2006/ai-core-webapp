@@ -59,6 +59,14 @@ const content = [
         notebook: 'https://github.com/AI-Core/Convolutional-Neural-Networks/blob/master/CNN%20Detection.ipynb',
         solutions: 'https://github.com/AI-Core/Convolutional-Neural-Networks/blob/master/CNN%20Detection%20Solutions.ipynb'
     },
+    {
+        title: 'Recurrent Neural Networks',
+        caption: 'An intro to RNNs for language modelling',
+        id: 'rnns',
+        notebook: '',
+        solutions: '',
+        feedback: 'https://docs.google.com/forms/d/e/1FAIpQLScwGl3Y5EAtjKhtGfXaqoiHNsYGY8ASKVKjqCdE9aOxd6WARg/viewform?usp=sf_link'
+    },
 ]
 
 export const TrainingRoutes = () => {return (

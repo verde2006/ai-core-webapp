@@ -10,6 +10,7 @@ import { css } from "@emotion/core"
 import MainWorkshops from "./MainWorkshops"
 import { WorkshopsPreview } from "./Partnerships"
 import { importAll } from "../../utils"
+import Testimonials from "./Testimonials"
 
 var heros = importAll(require.context('../../images/heros'), false)
 heros = Object.values(heros)
@@ -22,7 +23,6 @@ class Home extends Component{
     render() {
         return (
             <>
-            {/* <Navbar btn='Login'/> */}
             <LandingPage 
                 nav={{
                     links: ['events', 'partnerships', 'about'],
@@ -45,7 +45,8 @@ class Home extends Component{
                 heros={heros}
                 sections={[
                     <MainWorkshops />,
-                    <WorkshopsPreview />
+                    <WorkshopsPreview />,
+                    <Testimonials />
                 ]}
             />
             </>
