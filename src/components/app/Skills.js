@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import { makePostRequest } from "../../api_calls"
 import { panel, Button } from "mvp-webapp"
 import { importAll } from "../../utils"
+import plus from "../../images/misc/plus.svg"
 
 const badges = importAll(require.context('../../images/badges'))
 
@@ -13,18 +14,25 @@ class _Skills extends Component {
         console.log('SKILLS:', this.props.skills)
         return (
             <div css={style}>
-                <div css={css`font-size: 30px; margin-bottom: 20px; font-weight: 900;`}>Your skills</div>
+                <div className="title">Your skills</div>
                 <div className="" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-                    {this.props.skills.map((s) => {return(
+                    {this.props.skills.map((s) => {
+                        console.log(s)
+                        // console.log(skills)
+                        s = skills.filter((skill)=>{return skill.id == s})
+                        console.log(s)
+                        s = s[0]
+                        console.log(s)
+                        return(
                         <div>
-                            <img src={s.badge} alt={`${s.name} badge`} />
-                            <div>
+                            <img css={css`height: 60px; padding: 10px;`} src={s.badge} alt={`${s.name} badge`} />
+                            {/* <div>
                                 {s.name}
-                            </div>
+                            </div> */}
                         </div>
                     )})}
                 </div>
-                <Button text='Add skill badges' onClick={()=>{this.props.openModal(
+                <img src={plus} className="edit" onClick={()=>{this.props.openModal(
                     <SelectSkills />
                 )}}/>
             </div>
@@ -32,7 +40,9 @@ class _Skills extends Component {
     }
 }
 
-const _SelectSkills = (props) => {return (
+const _SelectSkills = (props) => {
+    console.log(props.skills)
+    return (
     <>
     <div css={css`${panel} ${selectStyle}`}>
         <div css={css`font-size: 30px; margin-bottom: 20px; font-weight: 900;`}>
@@ -40,8 +50,15 @@ const _SelectSkills = (props) => {return (
         </div>
         <div className="badges">
             {skills.map((s)=>{return (
-                <div css={css`opacity: ${props.skills.includes(s) ? 1 : 0.6}`}>
-                    <img src={s.badge} alt={`${s.name} badge`} />
+                <div css={css`opacity: ${props.skills.includes(s.id) ? 1 : 0.3}`}>
+                    <img src={s.badge} alt={`${s.name} badge`} 
+                        onClick={()=>{
+                            s = s.id
+                            var new_skills = props.skills.includes(s) ? props.skills.filter((i)=>{return i !== s}) : [...props.skills, s]
+                            props.setSkill({skills: new_skills})
+                            makePostRequest('app/user/info', {skills: new_skills})
+                        }}
+                    />
                     <div>{s.name}</div>
                 </div>
             )})}
@@ -59,6 +76,12 @@ const mapDispatchToProps = (dispatch) => {return {
             type: "OPEN_MODAL",
             content
         })
+    },
+    setSkill: (update) => {
+        dispatch({
+            type: "SET_USER",
+            update
+        })
     }
 }}
 
@@ -68,50 +91,62 @@ const SelectSkills = connect(mapStateToProps, mapDispatchToProps)(_SelectSkills)
 const skills = [
     {
         name: 'Neural Networks',
+        id: 'nns',
         badge: badges['nns.jpg']
     },
     {
         name: 'Classification',
+        id: 'classification',
         badge: badges['classification.jpg']
     },
     {
         name: 'Convolutional Neural Networks',
+        id: 'cnns',
         badge: badges['cnns.jpg']
     },
     {
         name: 'Activation functions',
+        id: 'activation',
         badge: badges['activation.jpg']
     },
     {
         name: 'Gradient based optimisation',
+        id: 'grad-optim',
         badge: badges['grad-optim.jpg']
     },
     {
         name: 'Grid Search',
+        id: 'grid-search',
         badge: badges['grid-search.jpg']
     },
     {
         name: 'Multivariate regression',
+        id: 'multi-reg',
         badge: badges['multi-reg.jpg']
     },
     {
         name: 'Python',
+        id: 'python',
         badge: badges['python.jpg']
     },
     {
         name: 'PyTorch',
+        id: 'pytorch',
         badge: badges['pytorch.jpg']
     },
     {
         name: 'Raspberry Pi',
+        id: 'raspberry-pi',
         badge: badges['raspberry-pi.jpg']
     },
     {
         name: 'Regression',
+        id: 'reg',
         badge: badges['reg.jpg']
     },
     // {
     //     name: '',
+        // id: '',
     //     badge: badges['.jpg']
     // },
 ]
@@ -194,6 +229,20 @@ const style = css`
     .add-option {
        min-width: 80px;
     }
+
+    // .edit {
+    //     position: absolute;
+    //     top: 10px;
+    //     right: 20px;
+    //     background-color: var(--color1);
+    //     color: var(--color2);
+    //     height: 30px;
+    //     width: 30px;
+    //     border-radius: var(--radius);
+    //     vertical-align: middle;
+    //     padding-bottom: 10px;
+    //     box-sizing: border-box;
+    // }
 `
 const selectStyle = css`
     width: 90vw; 
@@ -205,7 +254,14 @@ const selectStyle = css`
         flex-wrap: wrap;
         flex-direction: row;
 
+        > div:hover {
+            opacity: 1;
+        }
+
         > div {
+            transition-duration: 0.5s;
+            cursor: pointer;
+
             width: 100px;
             height: 100px;
             display: flex;

@@ -1,14 +1,21 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { Form } from "mvp-webapp"
+import { Form, panel, Button } from "mvp-webapp"
 import { makePostRequest } from "../../api_calls"
+import { css, jsx } from "@emotion/core"
+/** @jsx jsx */
+import edit from "../../images/misc/edit.svg"
+
+const style = css`
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+`
 
 class About extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-
-        }
+        this.state = {}
     }
 
     onSave = (e) => {
@@ -16,60 +23,92 @@ class About extends Component {
 
     render() {
         var about = this.props.about
+        delete about['slide_idx']
         console.log('ABOUT:', about)
         return (
-            <Form 
-                // redirect='/app/profile'
-                stay={true}
-                slides={[{
-                    title: 'About',
-                    onSubmit: (about) => {
-                        makePostRequest('app/user/update-info', {about})
-                        this.props.update({about})
-                    },
-                    questions: [
-                        {
-                            title: 'Name',
-                            type: 'text',
-                            id: 'name',
-                            default: about.name
-                        },
-                        {
-                            title: 'Age',
-                            type: 'text',
-                            id: 'age',
-                            default: about.age
-                        },
-                        {
-                            title: 'Course',
-                            type: 'text',
-                            id: 'course',
-                            default: about.course
-                        },
-                        {
-                            title: 'Ethnicity',
-                            type: 'text',
-                            id: 'ethnicity',
-                            default: about.ethnicity
-                        },
-                        {
-                            title: 'Gender',
-                            type: 'text',
-                            id: 'gender',
-                            default: about.gender
-                        },
-                        {
-                            title: 'Year of study',
-                            type: 'text',
-                            id: 'year_of_study',
-                            default: about.year_of_study
-                        },
-                    ]
-                }]}
-            />
+            <div css={panel}>
+                <div className="title">
+                    {'About you'}
+                </div>
+                {
+                    // [
+                    //     {key: 'name', value: about.name},
+                    //     {key: 'age', value: about.age},
+                    // ].
+                    Object.keys(about).map((k) => {return (
+                        <>
+                        <div css={style}>
+                            <div><strong>{k.replace(/_/g, ' ')}</strong></div>
+                            <div>{about[k]}</div>
+                        </div>
+                        <br/>
+                        </>
+                    )})
+                }
+                <img className="edit" src={edit} onClick={()=>{this.props.openModal(<SetAbout/>)}}/>
+            </div>
         )
     }
 }
+
+var SetAbout = (props) => {
+    var about = props.about
+    return (
+    // <div css={css`width: 120%`}>
+    <Form 
+        // redirect='/app/profile'
+        stay={true}
+        slides={[{
+            title: 'About',
+            onSubmit: (about) => {
+                makePostRequest('app/user/update-info', {about})
+                props.update({about})
+                props.closeModal()
+            },
+            questions: [
+                {
+                    title: 'Name',
+                    type: 'text',
+                    id: 'name',
+                    default: about.name
+                },
+                {
+                    title: 'Age',
+                    type: 'number',
+                    id: 'age',
+                    default: about.age
+                },
+                {
+                    title: 'Degree',
+                    type: 'text',
+                    id: 'course',
+                    default: about.course
+                },
+                {
+                    title: 'Ethnicity',
+                    type: 'text',
+                    id: 'ethnicity',
+                    default: about.ethnicity
+                },
+                {
+                    title: 'Gender',
+                    type: 'dropdown',
+                    options: ['Male', 'Female', 'other'],
+                    id: 'gender',
+                    default: about.gender
+                },
+                {
+                    title: 'Year of study',
+                    type: 'dropdown',
+                    options: [1, 2, 3, 4, 5, 6, '7+', 'Not studying'],
+                    id: 'year_of_study',
+                    default: about.year_of_study
+                },
+            ]
+        }]}
+    />
+    // </div>
+)}
 
 const mapStateToProps = (state) => {
     return {
@@ -84,8 +123,20 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'SET_USER',
                 update
             })
+        },
+        openModal: (content) => {
+            dispatch({
+                type: 'OPEN_MODAL',
+                content
+            })
+        },
+        closeModal: ()=>{
+            dispatch({
+                type:'CLOSE_MODAL'
+            })
         }
     }
 }
 
+export var SetAbout = connect(mapStateToProps, mapDispatchToProps)(SetAbout)
 export default About = connect(mapStateToProps, mapDispatchToProps)(About)

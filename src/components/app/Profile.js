@@ -16,7 +16,7 @@ import Skills from "./Skills"
 class Profile extends Component{
     render() {
     return (
-        <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'colum', justifyContent: 'left', flexFlow: 'column wra'}}>
+        <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'colum', justifyContent: 'space-around', flexFlow: 'column wra'}}>
         <div css={css`margin: 20px`}>
             <ProfilePic />
             <Bio bio={this.props.user.bio}/>
@@ -24,7 +24,7 @@ class Profile extends Component{
         <About />
         <Options 
             options={this.props.user.interests}
-            allOptions={['Computer vision', 'NLP', 'RL', 'Startups', 'Consulting', 'Hardware', 'Design', 'Sales', 'Writing']}
+            allOptions={['Computer vision', 'NLP', 'RL', 'Startups', 'Consulting', 'Hardware', 'Design', 'Sales', 'Writing', 'VR', 'AR', 'Robotics', 'Trading', 'Medicine']}
             title='Your interests'
             onChange={(interests) => {
                 console.log('updating with:', interests)
@@ -32,16 +32,15 @@ class Profile extends Component{
             }}
         />
         <Skills />
-        {/* <Options 
-            options={this.props.user.skills}
-            allOptions={['computer vision', 'NLP', 'RL']}
-            title='Your skills'
-            onChange={(skills) => {
-                console.log('updating with:', skills)
-                this.props.setUserInfo({skills});
+        <Options 
+            options={this.props.user.goals}
+            allOptions={['Learn AI out of interest', 'Get hired', 'Use AI in a project', 'Learn to code', 'Find team for project']}
+            title='Current goals'
+            onChange={(goals) => {
+                console.log('updating with:', goals)
+                this.props.setUserInfo({goals});
             }}
-        /> */}
-        {/* <Interests /> */}
+        />
         {/* <Stats user={this.props.user}/>
         <FeatureRequest /> */}
         </div>

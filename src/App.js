@@ -32,7 +32,7 @@ Amplify.configure({
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-        // identityPoolId: 'eu-west-2:855cf335-a3b7-4b7f-b47d-dc9fd044bd9b',
+        identityPoolId: 'eu-west-2:a9b6789c-da76-4a3e-ae38-93373981ff11',
         
         // REQUIRED - Amazon Cognito Region
         region: 'eu-west-2',
@@ -149,7 +149,6 @@ const user = (state={}, action) => {
             console.log('new user:', s)
             return s
         case "RATE_COMPANY":
-            console.log('rating redux')
             var company_ratings = {
                 [action.company]: action.rating,
                 ...state.company_ratings
@@ -165,7 +164,9 @@ const user = (state={}, action) => {
                 skills: [],
                 interests: [],
                 company_ratings: {},
-                about: {}
+                about: {},
+                goals: [],
+                ...state
             }
     }
 }

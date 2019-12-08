@@ -151,7 +151,7 @@ export default class Skills extends Component {
         var allOptions = Array.from(new Set([...this.state.allOptions, ...options]))
         return (
             <div css={style}>
-                <div className="medium">
+                <div className="title">
                     {this.props.title}
                 </div>
                 <div className="" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
